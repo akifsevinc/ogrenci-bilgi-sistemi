@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h> 
@@ -27,19 +26,27 @@ if (scanf("%d", &menusecim) != 1) {
     continue;}
 
 if (menusecim == 1){
+
+    if (kayitliogrenci == 100){
+        printf("Öğrenci limiti doldu!");
+        continue;
+    }
+    else{
     printf("Öğrenci numarası giriniz:");
     if (scanf("%d", &sinif[kayitliogrenci].ogrencino) != 1) {
     printf("Lütfen geçerli bir öğrenci numarası giriniz!\n");
     while (getchar() != '\n');
     sinif[kayitliogrenci].ogrencino = 0;
     continue;}
-    printf("Öğrenci ilk adını giriniz:");
-    scanf("%s", sinif[kayitliogrenci].ilkad);
-    printf("Öğrenci soy adını giriniz:");
+    printf("Öğrenci ilk adını giriniz:\n");
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+    fgets(sinif[kayitliogrenci].ilkad, 20, stdin);
+    printf("Öğrenci soy adını giriniz:\n");
     scanf("%s", sinif[kayitliogrenci].soyad);
     kayitliogrenci = kayitliogrenci + 1;
     printf("Öğrenci başarıyla kaydedildi!\n");
-    continue;
+    continue;}
 }
 else if (menusecim == 2){
     if (kayitliogrenci == 0){
