@@ -28,7 +28,11 @@ if (scanf("%d", &menusecim) != 1) {
 
 if (menusecim == 1){
     printf("Öğrenci numarası giriniz:");
-    scanf("%d", &sinif[kayitliogrenci].ogrencino);
+    if (scanf("%d", &sinif[kayitliogrenci].ogrencino) != 1) {
+    printf("Lütfen geçerli bir öğrenci numarası giriniz!\n");
+    while (getchar() != '\n');
+    sinif[kayitliogrenci].ogrencino = 0;
+    continue;}
     printf("Öğrenci ilk adını giriniz:");
     scanf("%s", sinif[kayitliogrenci].ilkad);
     printf("Öğrenci soy adını giriniz:");
@@ -43,9 +47,11 @@ else if (menusecim == 2){
         continue;
     }
     for (int i = 0; i < kayitliogrenci; i++) {
+        printf("----------------------------------------------\n");
         printf("Öğrenci no: %d\n", sinif[i].ogrencino);
         printf("Öğrenci adı: %s\n", sinif[i].ilkad);
         printf("Öğrenci soy ad: %s\n", sinif[i].soyad);
+        printf("----------------------------------------------\n");
 
     }
     continue;
