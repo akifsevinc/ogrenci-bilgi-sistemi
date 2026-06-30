@@ -40,6 +40,21 @@ if (menusecim == 1){
     while (getchar() != '\n');
     sinif[kayitliogrenci].ogrencino = 0;
     continue;}
+    int cift_kayit = 0;
+    for (int n = 0;  n < kayitliogrenci; n++){
+        if (sinif[kayitliogrenci].ogrencino == sinif[n].ogrencino){
+            printf("Bu numara zaten kayıtlı!\n");
+            cift_kayit++;
+            while (getchar() != '\n');
+            sinif[kayitliogrenci].ogrencino = 0;
+            break;
+        }
+}
+
+if(cift_kayit > 0){
+    continue;
+}
+
     printf("Öğrenci ilk adını giriniz:\n");
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
@@ -68,7 +83,7 @@ else if (menusecim == 2){
 
 else if (menusecim == 3){
     if (kayitliogrenci == 0){
-        printf("Daha hiçbir öğrenci kaydedilmedi!");
+        printf("Daha hiçbir öğrenci kaydedilmedi!\n");
         continue;
     }
     printf("Silmek istediğiniz öğrencinin numarasını yazınız:");
@@ -78,16 +93,23 @@ if (scanf("%d", &silinenno) != 1) {
     silinenno = 0;
     continue;
 }   
+    int bulundu = 0;
     for (int f = 0;  f < kayitliogrenci; f++){
         if (silinenno == sinif[f].ogrencino){
             for (int c = f; c < kayitliogrenci - 1; c++){
                 sinif[c] = sinif[c + 1];
             }
                 kayitliogrenci--;
+                bulundu++;
                 printf("Silme basarili!\n");
                 break;
         }
+
     }
+        if (bulundu == 0){
+        printf("Öğrenci numarası bulunamadı!\n");
+        continue;
+        }
 
 }
 
