@@ -23,9 +23,9 @@ int main(){
         printf("Hata: Dosya bulunamadı!\n");
     }
     else{
-    while (fscanf(fpointer, "%d", &sinif[kayitliogrenci].ogrencino) != EOF) {
-        fscanf(fpointer, "%s", sinif[kayitliogrenci].ilkad);
-        fscanf(fpointer, "%s", sinif[kayitliogrenci].soyad);
+    while (kayitliogrenci < 100 && fscanf(fpointer, "%d", &sinif[kayitliogrenci].ogrencino) != EOF) {
+        fscanf(fpointer, "%19s", sinif[kayitliogrenci].ilkad);
+        fscanf(fpointer, "%19s", sinif[kayitliogrenci].soyad);
         fscanf(fpointer, "%d", &sinif[kayitliogrenci].vizenot);
         fscanf(fpointer, "%d", &sinif[kayitliogrenci].finalnot);
         kayitliogrenci++;
@@ -83,9 +83,17 @@ if(cift_kayit > 0){
     printf("Öğrenci soy adını giriniz:\n");
     fgets(sinif[kayitliogrenci].soyad, 20, stdin);
     printf("Öğrencinin vize notunu giriniz:");
-    scanf("%d",&sinif[kayitliogrenci].vizenot);
+    if (scanf("%d", &sinif[kayitliogrenci].vizenot) != 1) {
+    printf("Geçersiz not!\n");
+    while (getchar() != '\n');
+    continue;
+}
     printf("Öğrencinin final notunu giriniz:");
-    scanf("%d", &sinif[kayitliogrenci].finalnot);
+    if (scanf("%d", &sinif[kayitliogrenci].finalnot) != 1) {
+    printf("Geçersiz not!\n");
+    while (getchar() != '\n');
+    continue;
+}
     kayitliogrenci = kayitliogrenci + 1;
     printf("Öğrenci başarıyla kaydedildi!\n");
     continue;
