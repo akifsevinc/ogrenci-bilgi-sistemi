@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h> 
 
 struct Ogrenci {
     int ogrencino;
     char ilkad[20];
     char soyad[20];
+    int vizenot;
+    int finalnot;
+    float ortalama;
     };
 
 int main(){
@@ -15,12 +17,31 @@ int main(){
     struct Ogrenci sinif[100];
     int kayitliogrenci = 0;
 
-    while (menusecim != 4){
+    FILE *fpointer = fopen("liste.txt", "r");
+
+    if (fpointer == NULL) {
+        printf("Hata: Dosya bulunamadı!\n");
+    }
+    else{
+    while (fscanf(fpointer, "%d", &sinif[kayitliogrenci].ogrencino) != EOF) {
+        fscanf(fpointer, "%s", sinif[kayitliogrenci].ilkad);
+        fscanf(fpointer, "%s", sinif[kayitliogrenci].soyad);
+        fscanf(fpointer, "%d", &sinif[kayitliogrenci].vizenot);
+        fscanf(fpointer, "%d", &sinif[kayitliogrenci].finalnot);
+        kayitliogrenci++;
+
+    }
+        fclose(fpointer);}
+
+
+
+    while (menusecim != 5){
 printf("Öğrenci bilgi sistemine hoş geldiniz! Lütfen yapmak istediğiniz işlemi seçiniz.\n");
 printf("1. Yeni öğrenci ekle\n");
 printf("2. Tüm öğrencileri listele\n");
 printf("3. Öğrenci silme\n");
-printf("4. Çıkış yap\n");
+printf("4. Verileri kaydet\n");
+printf("5. Çıkış yap\n");
 if (scanf("%d", &menusecim) != 1) {
     printf("Lütfen geçerli bir menü numarası giriniz!\n");
     while (getchar() != '\n');
@@ -60,10 +81,15 @@ if(cift_kayit > 0){
     while ((c = getchar()) != '\n' && c != EOF);
     fgets(sinif[kayitliogrenci].ilkad, 20, stdin);
     printf("Öğrenci soy adını giriniz:\n");
-    scanf("%s", sinif[kayitliogrenci].soyad);
+    fgets(sinif[kayitliogrenci].soyad, 20, stdin);
+    printf("Öğrencinin vize notunu giriniz:");
+    scanf("%d",&sinif[kayitliogrenci].vizenot);
+    printf("Öğrencinin final notunu giriniz:");
+    scanf("%d", &sinif[kayitliogrenci].finalnot);
     kayitliogrenci = kayitliogrenci + 1;
     printf("Öğrenci başarıyla kaydedildi!\n");
-    continue;}
+    continue;
+}
 }
 else if (menusecim == 2){
     if (kayitliogrenci == 0){
@@ -75,6 +101,9 @@ else if (menusecim == 2){
         printf("Öğrenci no: %d\n", sinif[i].ogrencino);
         printf("Öğrenci adı: %s\n", sinif[i].ilkad);
         printf("Öğrenci soy ad: %s\n", sinif[i].soyad);
+        printf("Öğrenci vize not: %d\n", sinif[i].vizenot);
+        printf("Öğrenci final not: %d\n", sinif[i].finalnot);
+        printf("Öğrenci ortalama not: %.2f\n", (sinif[i].finalnot * 0.4) + (sinif[i].vizenot * 0.6));
         printf("----------------------------------------------\n");
 
     }
@@ -113,9 +142,47 @@ if (scanf("%d", &silinenno) != 1) {
 
 }
 
-else if (menusecim == 4){
+    else if(menusecim == 4){
+        FILE *fpointer = fopen("liste.txt", "w");
+
+    if (fpointer == NULL) {
+        printf("Hata: Dosya açılamadı!\n");
+        return 1;
+    }
+    else{
+        for(int h = 0; h < kayitliogrenci; h++){
+        fprintf(fpointer, "%d\n", sinif[h].ogrencino);
+        fprintf(fpointer, "%s\n", sinif[h].ilkad);
+        fprintf(fpointer, "%s\n", sinif[h].soyad);
+        fprintf(fpointer, "%d\n", sinif[h].vizenot);
+        fprintf(fpointer, "%d\n", sinif[h].finalnot);
+        }
+    }
+    fclose(fpointer);
+    printf("Dosya başarıyla yazıldı.\n");
+    continue;
+    }
+
+
+else if (menusecim == 5){
     printf("Programdan çıkılıyor!\n");
+        FILE *fpointer = fopen("liste.txt", "w");
+
+    if (fpointer == NULL) {
+        printf("Hata: Dosya açılamadı!\n");
+        return 1;
+    }
+    else{
+        for(int h = 0; h < kayitliogrenci; h++){
+        fprintf(fpointer, "%d\n", sinif[h].ogrencino);
+        fprintf(fpointer, "%s\n", sinif[h].ilkad);
+        fprintf(fpointer, "%s\n", sinif[h].soyad);
+        fprintf(fpointer, "%d\n", sinif[h].vizenot);
+        fprintf(fpointer, "%d\n", sinif[h].finalnot);
+        }
+    fclose(fpointer);
     return 0;
+}
 }
 
 else {
