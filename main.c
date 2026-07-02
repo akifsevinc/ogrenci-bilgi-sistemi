@@ -8,7 +8,6 @@ struct Ogrenci {
     char soyad[20];
     int vizenot;
     int finalnot;
-    float ortalama;
     };
 
 int main(){
